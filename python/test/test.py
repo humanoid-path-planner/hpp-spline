@@ -11,6 +11,13 @@ from hpp_spline import bezier, bezier6, curve_constraints, exact_cubic, from_bez
 
 class TestSpline(unittest.TestCase):
     def test_spline(self):
+        waypoints = matrix([[1., 2., 3.]]).T
+        a = bezier(waypoints,2.)
+        t = 0.
+        while t < 2.:
+            assert_allclose(a(t),matrix([1., 2., 3.]).T)
+            t += 0.1
+
         waypoints = matrix([[1., 2., 3.], [4., 5., 6.]]).T
         waypoints6 = matrix([[1., 2., 3., 7., 5., 5.], [4., 5., 6., 4., 5., 6.]]).T
         time_waypoints = matrix([0., 1.]).T
