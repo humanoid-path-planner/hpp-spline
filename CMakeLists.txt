@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 2.6)
 project(spline)
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/test.cmake)
-INCLUDE(cmake/python.cmake)
+INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/hpp.cmake)
+INCLUDE(cmake/python.cmake)
 
 SET(PROJECT_NAME hpp-spline)
 SET(PROJECT_DESCRIPTION
@@ -22,12 +23,10 @@ SETUP_HPP_PROJECT()
 OPTION (BUILD_PYTHON_INTERFACE "Build the python binding" ON)
 IF(BUILD_PYTHON_INTERFACE)
   # search for python
-  FINDPYTHON(2.7 REQUIRED)
-  find_package( PythonLibs 2.7 REQUIRED )
-  include_directories( ${PYTHON_INCLUDE_DIRS} )
+  FINDPYTHON()
 
-  find_package( Boost COMPONENTS python REQUIRED )
-  include_directories( ${Boost_INCLUDE_DIR} )
+  SET(BOOST_COMPONENTS python)
+  SEARCH_FOR_BOOST()
 
   add_subdirectory (python)
 ENDIF(BUILD_PYTHON_INTERFACE)
