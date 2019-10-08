@@ -22,8 +22,7 @@ SETUP_HPP_PROJECT()
 OPTION (BUILD_PYTHON_INTERFACE "Build the python binding" ON)
 IF(BUILD_PYTHON_INTERFACE)
   # search for python
-  FINDPYTHON(2.7 REQUIRED)
-  find_package( PythonLibs 2.7 REQUIRED )
+  FINDPYTHON()
   include_directories( ${PYTHON_INCLUDE_DIRS} )
 
   find_package( Boost COMPONENTS python REQUIRED )
