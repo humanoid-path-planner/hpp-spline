@@ -2,20 +2,18 @@
 
 import unittest
 
+from hpp_spline import (bezier, bezier6, curve_constraints, exact_cubic, from_bezier, polynom, spline_deriv_constraint)
 from numpy import matrix
-from numpy.linalg import norm
 from numpy.testing import assert_allclose
-
-from hpp_spline import bezier, bezier6, curve_constraints, exact_cubic, from_bezier, polynom, spline_deriv_constraint
 
 
 class TestSpline(unittest.TestCase):
     def test_spline(self):
         waypoints = matrix([[1., 2., 3.]]).T
-        a = bezier(waypoints,2.)
+        a = bezier(waypoints, 2.)
         t = 0.
         while t < 2.:
-            assert_allclose(a(t),matrix([1., 2., 3.]).T)
+            assert_allclose(a(t), matrix([1., 2., 3.]).T)
             t += 0.1
 
         waypoints = matrix([[1., 2., 3.], [4., 5., 6.]]).T
