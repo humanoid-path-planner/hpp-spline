@@ -36,7 +36,7 @@ typedef spline::polynom  <real, real, 3, true, point_t, t_point_t> polynom_t;
 typedef spline::exact_cubic  <real, real, 3, true, point_t, t_point_t> exact_cubic_t;
 typedef polynom_t::coeff_t coeff_t;
 typedef std::pair<real, point_t> waypoint_t;
-typedef std::vector<waypoint_t, Eigen::aligned_allocator<point_t> > t_waypoint_t;
+typedef std::vector<waypoint_t, Eigen::aligned_allocator<waypoint_t> > t_waypoint_t;
 
 typedef spline::Bern<double> bernstein_t;
 
