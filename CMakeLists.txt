@@ -6,6 +6,7 @@ SET(PROJECT_DESCRIPTION "template based classes for creating and manipulating sp
 INCLUDE(cmake/hpp.cmake)
 INCLUDE(cmake/test.cmake)
 INCLUDE(cmake/python.cmake)
+INCLUDE(cmake/boost.cmake)
 
 # Disable -Werror on Unix for now.
 SET(CXX_DISABLE_WERROR True)
@@ -23,8 +24,10 @@ IF(BUILD_PYTHON_INTERFACE)
   FINDPYTHON()
   include_directories(SYSTEM ${PYTHON_INCLUDE_DIRS} )
 
-  find_package( Boost COMPONENTS python REQUIRED )
-  include_directories(SYSTEM ${Boost_INCLUDE_DIR} )
+  SET(BOOST_COMPONENTS python)
+  SEARCH_FOR_BOOST()
+
+  include_directories(SYSTEM ${Boost_INCLUDE_DIRS} )
 
   add_subdirectory (python)
 ENDIF(BUILD_PYTHON_INTERFACE)
