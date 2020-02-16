@@ -3,26 +3,26 @@
 import unittest
 
 import eigenpy
-from numpy import matrix
+from numpy import array
 from numpy.testing import assert_allclose
 
 from hpp_spline import bezier, bezier6, curve_constraints, exact_cubic, from_bezier, polynom, spline_deriv_constraint
 
-eigenpy.switchToNumpyMatrix()
+eigenpy.switchToNumpyArray()
 
 
 class TestSpline(unittest.TestCase):
     def test_spline(self):
-        waypoints = matrix([[1., 2., 3.]]).T
+        waypoints = array([[1., 2., 3.]]).T
         a = bezier(waypoints, 2.)
         t = 0.
         while t < 2.:
-            assert_allclose(a(t), matrix([1., 2., 3.]).T)
+            assert_allclose(a(t), array([1., 2., 3.]).T)
             t += 0.1
 
-        waypoints = matrix([[1., 2., 3.], [4., 5., 6.]]).T
-        waypoints6 = matrix([[1., 2., 3., 7., 5., 5.], [4., 5., 6., 4., 5., 6.]]).T
-        time_waypoints = matrix([0., 1.]).T
+        waypoints = array([[1., 2., 3.], [4., 5., 6.]]).T
+        waypoints6 = array([[1., 2., 3., 7., 5., 5.], [4., 5., 6., 4., 5., 6.]]).T
+        time_waypoints = array([0., 1.]).T
 
         # testing bezier curve
         a = bezier6(waypoints6)
@@ -41,15 +41,15 @@ class TestSpline(unittest.TestCase):
         for i in range(10):
             t = float(i) / 10.
             assert_allclose(a(t), prim.derivate(t, 1))
-        assert_allclose(prim(0), matrix([0., 0., 0.]).T)
+        assert_allclose(prim(0), array([0., 0., 0.]).T)
 
         prim = a.compute_primitive(2)
         for i in range(10):
             t = float(i) / 10.
             assert_allclose(a(t), prim.derivate(t, 2), atol=1e-20)
-        assert_allclose(prim(0), matrix([0., 0., 0.]).T)
+        assert_allclose(prim(0), array([0., 0., 0.]).T)
 
-        waypoints = matrix([[1., 2., 3.], [4., 5., 6.], [4., 5., 6.], [4., 5., 6.], [4., 5., 6.]]).T
+        waypoints = array([[1., 2., 3.], [4., 5., 6.], [4., 5., 6.], [4., 5., 6.], [4., 5., 6.]]).T
         a0 = bezier(waypoints)
         a1 = bezier(waypoints, 3.)
         prim0 = a0.compute_primitive(1)
@@ -61,18 +61,17 @@ class TestSpline(unittest.TestCase):
             assert_allclose(a0.derivate(t, 1), a1.derivate(3 * t, 1) * 3.)
             assert_allclose(a0.derivate(t, 2), a1.derivate(3 * t, 2) * 9.)
             assert_allclose(prim0(t), prim1(t * 3) / 3.)
-        assert_allclose(prim(0), matrix([0., 0., 0.]).T)
-        with self.assertRaises(AssertionError):
-            assert_allclose(prim(0), matrix([0., 0., 0.]))
+        assert_allclose(prim(0), array([0., 0., 0.]).T)
+        assert_allclose(prim(0), array([0., 0., 0.]))
 
         # testing bezier with constraints
         c = curve_constraints()
-        c.init_vel = matrix([0., 1., 1.]).T
-        c.end_vel = matrix([0., 1., 1.]).T
-        c.init_acc = matrix([0., 1., -1.]).T
-        c.end_acc = matrix([0., 100., 1.]).T
+        c.init_vel = array([0., 1., 1.]).T
+        c.end_vel = array([0., 1., 1.]).T
+        c.init_acc = array([0., 1., -1.]).T
+        c.end_acc = array([0., 100., 1.]).T
 
-        waypoints = matrix([[1., 2., 3.], [4., 5., 6.]]).T
+        waypoints = array([[1., 2., 3.], [4., 5., 6.]]).T
         a = bezier(waypoints, c)
         assert_allclose(a.derivate(0, 1), c.init_vel)
         assert_allclose(a.derivate(1, 2), c.end_acc)
@@ -101,10 +100,10 @@ class TestSpline(unittest.TestCase):
         c.init_acc
         c.end_acc
 
-        c.init_vel = matrix([0., 1., 1.]).T
-        c.end_vel = matrix([0., 1., 1.]).T
-        c.init_acc = matrix([0., 1., 1.]).T
-        c.end_acc = matrix([0., 1., 1.]).T
+        c.init_vel = array([0., 1., 1.]).T
+        c.end_vel = array([0., 1., 1.]).T
+        c.init_acc = array([0., 1., 1.]).T
+        c.end_acc = array([0., 1., 1.]).T
 
         a = spline_deriv_constraint(waypoints, time_waypoints)
         a = spline_deriv_constraint(waypoints, time_waypoints, c)
