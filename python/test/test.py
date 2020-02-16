@@ -2,9 +2,13 @@
 
 import unittest
 
-from hpp_spline import (bezier, bezier6, curve_constraints, exact_cubic, from_bezier, polynom, spline_deriv_constraint)
+import eigenpy
 from numpy import matrix
 from numpy.testing import assert_allclose
+
+from hpp_spline import bezier, bezier6, curve_constraints, exact_cubic, from_bezier, polynom, spline_deriv_constraint
+
+eigenpy.switchToNumpyMatrix()
 
 
 class TestSpline(unittest.TestCase):
