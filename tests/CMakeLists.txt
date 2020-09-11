@@ -1,3 +1,2 @@
 ADD_UNIT_TEST(spline_tests Main.cpp)
-PKG_CONFIG_USE_DEPENDENCY(spline_tests eigen3)
-
+TARGET_LINK_LIBRARIES(spline_tests PRIVATE ${PROJECT_NAME})
